@@ -1,5 +1,8 @@
+use server::Server;
+use http::request;
+
 fn main() {
-    let server = server::Server::new("127.0.0.1:8080".to_string());
+    let server = Server::new("127.0.0.1:8080".to_string());
     server.run();
 }
 
@@ -22,16 +25,18 @@ mod server {
 }
 
 mod http {
-    mod request {
+    pub mod request {
+        use super::method::Method;
+
         pub struct Request {
             path: String,
             query_string: String,
             // super는 Parent Module를 참조할 수 있음
-            method: super::method::Method,
+            method: Method,
         }
     }
 
-    mod method {
+    pub mod method {
         pub enum Method {
             GET,
             DELETE,
