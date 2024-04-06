@@ -1,28 +1,48 @@
 fn main() {
-    let server = Server::new("127.0.0.1:8080".to_string());
+    let server = server::Server::new("127.0.0.1:8080".to_string());
     server.run();
 }
 
-struct Server {
-    addr: String,
+mod server {
+    pub struct Server {
+        addr: String,
+    }
+    
+    impl Server {
+        pub fn new(addr: String) -> Self {
+            Self {
+                addr
+            }
+        }
+    
+        pub fn run(self) {
+            println!("Listening on {}", self.addr);
+        }
+    }
 }
 
-impl Server {
-    fn new(addr: String) -> Self {
-        Self {
-            addr
+mod http {
+    mod request {
+        pub struct Request {
+            path: String,
+            query_string: String,
+            // super는 Parent Module를 참조할 수 있음
+            method: super::method::Method,
         }
     }
 
-    fn run(self) {
-        println!("Listening on {}", self.addr);
+    mod method {
+        pub enum Method {
+            GET,
+            DELETE,
+            POST,
+            PUT,
+            HEAD,
+            CONNECT,
+            OPTIONS,
+            TRACE
+        }        
     }
-}
-
-struct Request {
-    path: String,
-    query_string: String,
-    method: String,
 }
 
 /*
