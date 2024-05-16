@@ -7,4 +7,4 @@ pub enum Method {
     CONNECT,
     OPTIONS,
     TRACE
-}     
+}
